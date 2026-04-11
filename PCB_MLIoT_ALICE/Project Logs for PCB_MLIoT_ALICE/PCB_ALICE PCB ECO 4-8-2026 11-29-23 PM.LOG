@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=+5 Pin=U1-2
+Removed Pin From Net: NetName=GND Pin=U1-3
+Removed Pin From Net: NetName=Tx_HC05 Pin=U1-4
+Removed Member From Class: ClassName=Sch_ALICE Member=U1
+Added Component: Designator=U?(HC05)
+Added Pin To Net: NetName=+5 Pin=U?-2
+Added Pin To Net: NetName=GND Pin=U?-3
+Added Pin To Net: NetName=Tx_HC05 Pin=U?-4
+Added Member To Class: ClassName=Sch_ALICE Member=Component U? BT

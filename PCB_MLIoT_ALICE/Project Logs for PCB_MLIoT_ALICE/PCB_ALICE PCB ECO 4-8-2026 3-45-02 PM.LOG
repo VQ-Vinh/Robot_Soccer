@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=RPWM1 Pin=U2-15
+Removed Pin From Net: NetName=LPWM1 Pin=U2-16
+Removed Pin From Net: NetName=LPWM2 Pin=U2-25
+Removed Pin From Net: NetName=RPWM2 Pin=U2-26
+Added Pin To Net: NetName=RPWM2 Pin=U2-15
+Added Pin To Net: NetName=LPWM2 Pin=U2-16
+Added Pin To Net: NetName=RPWM1 Pin=U2-25
+Added Pin To Net: NetName=LPWM1 Pin=U2-26
+Added Member To Class: ClassName=Sch_ALICE Member=Component P3 BTS7960_Left

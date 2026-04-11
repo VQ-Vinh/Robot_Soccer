@@ -1,0 +1,43 @@
+Removed Member From Class: ClassName=Sch_ALICE Member=P4
+Removed Member From Class: ClassName=Sch_ALICE Member=P5
+Added Component: Designator=P2(HDR/Header/8/DL)
+Add component (AddParameter): Name = "BRAND"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PART NO"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "STOCK CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SUPPLIER"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "TYPE"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=P3(HDR/Header/8/DL)
+Add component (AddParameter): Name = "BRAND"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PART NO"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "STOCK CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SUPPLIER"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "TYPE"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5 Pin=P2-3
+Added Pin To Net: NetName=+5 Pin=P2-4
+Added Pin To Net: NetName=GND Pin=P2-8
+Added Pin To Net: NetName=+5 Pin=P3-3
+Added Pin To Net: NetName=+5 Pin=P3-4
+Added Pin To Net: NetName=GND Pin=P3-8
+Added Pin To Net: NetName=+12 Pin=LM1-1
+Added Pin To Net: NetName=+12 Pin=P1-2
+Added Pin To Net: NetName=+12 Pin=P2-7
+Added Pin To Net: NetName=+12 Pin=P3-7
+Added Net: Name=+12
+Added Pin To Net: NetName=LPWM1 Pin=P2-2
+Added Pin To Net: NetName=LPWM1 Pin=U2-16
+Added Net: Name=LPWM1
+Added Pin To Net: NetName=LPWM2 Pin=P3-2
+Added Pin To Net: NetName=LPWM2 Pin=U2-25
+Added Net: Name=LPWM2
+Added Pin To Net: NetName=RPWM1 Pin=P2-1
+Added Pin To Net: NetName=RPWM1 Pin=U2-15
+Added Net: Name=RPWM1
+Added Pin To Net: NetName=RPWM2 Pin=P3-1
+Added Pin To Net: NetName=RPWM2 Pin=U2-26
+Added Net: Name=RPWM2
+Added Pin To Net: NetName=Tx_HC05 Pin=U1-4
+Added Pin To Net: NetName=Tx_HC05 Pin=U2-7
+Added Net: Name=Tx_HC05
+Added Rule: Name=Schematic Supply Nets_2

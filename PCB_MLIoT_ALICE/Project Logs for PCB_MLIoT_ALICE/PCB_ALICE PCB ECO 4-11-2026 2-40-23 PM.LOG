@@ -1,0 +1,51 @@
+Removed Pin From Net: NetName=RPWM1 Pin=P2-1
+Removed Pin From Net: NetName=LPWM1 Pin=P2-2
+Removed Pin From Net: NetName=+5 Pin=P2-3
+Removed Pin From Net: NetName=+5 Pin=P2-4
+Removed Pin From Net: NetName=+12 Pin=P2-7
+Removed Pin From Net: NetName=GND Pin=P2-8
+Removed Pin From Net: NetName=RPWM2 Pin=P3-1
+Removed Pin From Net: NetName=LPWM2 Pin=P3-2
+Removed Pin From Net: NetName=+5 Pin=P3-5
+Removed Pin From Net: NetName=+5 Pin=P3-6
+Removed Pin From Net: NetName=GND Pin=P3-7
+Removed Pin From Net: NetName=+12 Pin=P3-8
+Removed Member From Class: ClassName=Sch_ALICE Member=P2
+Removed Member From Class: ClassName=Sch_ALICE Member=P3
+Added Component: Designator=C1(JP3-D2T)
+Add component (AddParameter): Name = "ComponentLink1 Description"; Value = "Manufacturer"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.we-online.com"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2 Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "http://katalog.we-online.de/em/datasheet/6130xx21821.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Created by"; Value = "Karrer Zheng"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Created Date"; Value = "29 March 2013"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "W¨¹rth Elektronik eiSos GmbH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NoPins"; Value = "06"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "partNo"; Value = "61300621821"; VariantName = "[No Variations]"
+Added Component: Designator=C2(JP3-D2T)
+Add component (AddParameter): Name = "ComponentLink1 Description"; Value = "Manufacturer"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.we-online.com"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2 Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "http://katalog.we-online.de/em/datasheet/6130xx21821.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Created by"; Value = "Karrer Zheng"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Created Date"; Value = "29 March 2013"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "W¨¹rth Elektronik eiSos GmbH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NoPins"; Value = "06"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "partNo"; Value = "61300621821"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=RPWM1 Pin=C1-1
+Added Pin To Net: NetName=+5 Pin=C1-2
+Added Pin To Net: NetName=+12 Pin=C1-3
+Added Pin To Net: NetName=+12 Pin=C1-4
+Added Pin To Net: NetName=+5 Pin=C1-5
+Added Pin To Net: NetName=LPWM1 Pin=C1-6
+Added Pin To Net: NetName=RPWM2 Pin=C2-1
+Added Pin To Net: NetName=+5 Pin=C2-2
+Added Pin To Net: NetName=+12 Pin=C2-3
+Added Pin To Net: NetName=+12 Pin=C2-4
+Added Pin To Net: NetName=+5 Pin=C2-5
+Added Pin To Net: NetName=LPWM2 Pin=C2-6
+Added Member To Class: ClassName=Sch_ALICE Member=Component C1 BTS_Left
+Added Member To Class: ClassName=Sch_ALICE Member=Component C2 BTS_Right
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1
+Added Rule: Name=Schematic Supply Nets_2

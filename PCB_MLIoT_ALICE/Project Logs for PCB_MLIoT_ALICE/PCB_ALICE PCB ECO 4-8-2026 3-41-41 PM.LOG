@@ -1,0 +1,19 @@
+Removed Pin From Net: NetName=RPWM2 Pin=P3-1
+Removed Pin From Net: NetName=LPWM2 Pin=P3-2
+Removed Pin From Net: NetName=+5 Pin=P3-3
+Removed Pin From Net: NetName=+5 Pin=P3-4
+Removed Pin From Net: NetName=+12 Pin=P3-7
+Removed Pin From Net: NetName=GND Pin=P3-8
+Added Component: Designator=P3(HDR/Header/8/DL)
+Add component (AddParameter): Name = "BRAND"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PART NO"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "STOCK CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SUPPLIER"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "TYPE"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=RPWM2 Pin=P3-1
+Added Pin To Net: NetName=LPWM2 Pin=P3-2
+Added Pin To Net: NetName=+5 Pin=P3-5
+Added Pin To Net: NetName=+5 Pin=P3-6
+Added Pin To Net: NetName=GND Pin=P3-7
+Added Pin To Net: NetName=+12 Pin=P3-8
