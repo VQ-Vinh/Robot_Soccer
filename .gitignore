@@ -1,0 +1,29 @@
+# ======= STM32 Build Artifacts =======
+build/
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.o
+*.d
+*.su
+
+# ======= VSCode Specifics =======
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+.history/
+*.code-workspace
+
+# ======= STM32CubeMX =======
+*.bak
+*.tmp
+# Giữ lại file .ioc để người khác có thể mở lại cấu hình phần cứng
+!*.ioc
+
+# ======= OS temporary files =======
+.DS_Store
+Thumbs.db
