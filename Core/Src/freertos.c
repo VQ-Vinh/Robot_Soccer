@@ -25,6 +25,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "motor.h"
+#include "bluetooth.h"
+#include "main.h"
 
 /* USER CODE END Includes */
 
@@ -139,7 +142,9 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    /* Heartbeat LED on PC13 - blink every 500ms */
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    osDelay(500);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -157,7 +162,9 @@ void StartUARTTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    /* Bluetooth processing is done in interrupt callback */
+    /* This task can be used for additional UART processing if needed */
+    osDelay(10);
   }
   /* USER CODE END StartUARTTask */
 }
@@ -175,7 +182,11 @@ void StartMotorTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    /* Check for auto-stop timeout - stop motors if no command for 1 second */
+    Motor_CheckTimeout();
+
+    /* Check every 100ms for timeout */
+    osDelay(100);
   }
   /* USER CODE END StartMotorTask */
 }

@@ -1,0 +1,283 @@
+/*
+  * 2st Runner up - Robot Design Competition, LAUNCHTIME 8th
+  * Robot điều khiển từ xa qua Bluetooth
+  * Phần cứng: Arduino Uno R3, module HC-05, 2 module L298N, 4 động cơ DC vàng V1, nguồn 3s 18650 12.6V
+*/
+
+#include <Arduino.h>
+
+// ========== KHAI BÁO CHÂN ĐIỀU KHIỂN ==========
+// Module 1 điều khiển 2 bánh trước
+#define frontLeft_IN1 2   // Chân điều khiển hướng bánh trước trái (IN1)
+#define frontLeft_IN2 4   // Chân điều khiển hướng bánh trước trái (IN2)
+#define frontRight_IN1 6  // Chân điều khiển hướng bánh trước phải (IN3)
+#define frontRight_IN2 7  // Chân điều khiển hướng bánh trước phải (IN4)
+#define front_ENA 3       // Chân PWM điều chỉnh tốc độ bánh trước trái (ENA)
+#define front_ENB 5       // Chân PWM điều chỉnh tốc độ bánh trước phải (ENB)
+
+// Module 2 điều khiển 2 bánh sau
+#define rearLeft_IN1 A0   // Chân điều khiển hướng bánh sau trái (IN1)
+#define rearLeft_IN2 A1   // Chân điều khiển hướng bánh sau trái (IN2)
+#define rearRight_IN1 A2  // Chân điều khiển hướng bánh sau phải (IN3)
+#define rearRight_IN2 A3  // Chân điều khiển hướng bánh sau phải (IN4)
+#define rear_ENA 10       // Chân PWM điều chỉnh tốc độ bánh sau trái (ENA)
+#define rear_ENB 11       // Chân PWM điều chỉnh tốc độ bánh sau phải (ENB)
+
+// ========== KHAI BÁO BIẾN TOÀN CỤC ==========
+int command;              // Biến lưu lệnh nhận từ Bluetooth
+int Speed = 230;          // Tốc độ mặc định (0-255)
+unsigned long lastCommandTime = 0; // Thời điểm nhận lệnh cuối cùng
+
+// Khai báo các hàm
+void forward();          // Hàm tiến thẳng
+void back();             // Hàm lùi thẳng
+void left();             // Hàm quay trái tại chỗ
+void right();            // Hàm quay phải tại chỗ
+void forwardleft();      // Hàm rẽ trái
+void forwardright();     // Hàm rẽ phải
+void backleft();         // Hàm lùi trái
+void backright();        // Hàm lùi phải
+void Stop();             // Hàm dừng xe
+
+// ========== HÀM SETUP ==========
+void setup() {
+  // Cấu hình các chân điều khiển động cơ là OUTPUT
+  pinMode(frontLeft_IN1, OUTPUT);
+  pinMode(frontLeft_IN2, OUTPUT);
+  pinMode(frontRight_IN1, OUTPUT);
+  pinMode(frontRight_IN2, OUTPUT);
+  pinMode(front_ENA, OUTPUT);
+  pinMode(front_ENB, OUTPUT);
+  
+  pinMode(rearLeft_IN1, OUTPUT);
+  pinMode(rearLeft_IN2, OUTPUT);
+  pinMode(rearRight_IN1, OUTPUT);
+  pinMode(rearRight_IN2, OUTPUT);
+  pinMode(rear_ENA, OUTPUT);
+  pinMode(rear_ENB, OUTPUT);
+  
+  // Khởi tạo kết nối Serial (Bluetooth) với baudrate 9600
+  Serial.begin(9600);
+  
+  // Dừng tất cả động cơ khi khởi động
+  Stop();
+}
+
+// ========== HÀM LOOP CHÍNH ==========
+void loop() {
+  // Kiểm tra nếu có dữ liệu từ Bluetooth
+  if (Serial.available() > 0) {
+    command = Serial.read();       // Đọc lệnh từ Bluetooth
+    lastCommandTime = millis();    // Cập nhật thời gian nhận lệnh
+    
+    // Xử lý lệnh nhận được
+    switch (command) {
+      case 'F': forward(); break;       // Tiến thẳng
+      case 'B': back(); break;          // Lùi thẳng
+      case 'L': left(); break;          // quay trái tại chỗ
+      case 'R': right(); break;         // quay phải tại chỗ
+      case 'G': forwardleft(); break;   // Tiến trái
+      case 'I': forwardright(); break;  // Tiến phải
+      case 'H': backleft(); break;      // Lùi trái
+      case 'J': backright(); break;     // Lùi phải
+      case '0': Speed = 155; break;     // Các mức tốc độ
+      case '1': Speed = 165; break;
+      case '2': Speed = 175; break;
+      case '3': Speed = 185; break;
+      case '4': Speed = 195; break;
+      case '5': Speed = 205; break;
+      case '6': Speed = 215; break;
+      case '7': Speed = 225; break;
+      case '8': Speed = 235; break;
+      case '9': Speed = 245; break;
+      case 'q': Speed = 255; break;     // Tốc độ tối đa
+      case 'S': Stop(); break;          // Dừng xe
+    }
+  }
+  
+  // Tự động dừng nếu không nhận lệnh trong 1 giây
+  if (millis() - lastCommandTime > 1000) {
+    Stop();
+  }
+}
+
+// ========== CÁC HÀM ĐIỀU KHIỂN CHUYỂN ĐỘNG ==========
+
+// Hàm điều khiển xe tiến thẳng
+void forward() {
+  // Điều khiển 2 bánh trước
+  digitalWrite(frontLeft_IN1, HIGH);  // Bánh trái tiến
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, HIGH); // Bánh phải tiến
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, Speed);      // Đặt tốc độ
+  analogWrite(front_ENB, Speed);
+  
+  // Điều khiển 2 bánh sau
+  digitalWrite(rearLeft_IN1, HIGH);   // Bánh trái tiến
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, HIGH);  // Bánh phải tiến
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, Speed);
+  analogWrite(rear_ENB, Speed);
+}
+
+// Hàm điều khiển xe lùi thẳng
+void back() {
+  // Điều khiển 2 bánh trước
+  digitalWrite(frontLeft_IN1, LOW);   // Bánh trái lùi
+  digitalWrite(frontLeft_IN2, HIGH);
+  digitalWrite(frontRight_IN1, LOW);  // Bánh phải lùi
+  digitalWrite(frontRight_IN2, HIGH);
+  analogWrite(front_ENA, Speed);
+  analogWrite(front_ENB, Speed);
+  
+  // Điều khiển 2 bánh sau
+  digitalWrite(rearLeft_IN1, LOW);    // Bánh trái lùi
+  digitalWrite(rearLeft_IN2, HIGH);
+  digitalWrite(rearRight_IN1, LOW);   // Bánh phải lùi
+  digitalWrite(rearRight_IN2, HIGH);
+  analogWrite(rear_ENA, Speed);
+  analogWrite(rear_ENB, Speed);
+}
+
+// Hàm điều khiển xe quay trái tại chỗ
+void left() {
+  // Giảm tốc độ 15% nếu đang ở tốc độ cao để tránh quay gấp
+  int adjustedSpeed = (Speed >= 225) ? (Speed * 0.85) : Speed;
+  if (adjustedSpeed < 50) adjustedSpeed = 50; // Đảm bảo tốc độ tối thiểu
+  
+  // Bánh trước: trái lùi, phải tiến
+  digitalWrite(frontLeft_IN1, LOW);   
+  digitalWrite(frontLeft_IN2, HIGH);
+  digitalWrite(frontRight_IN1, HIGH); 
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, adjustedSpeed);
+  analogWrite(front_ENB, adjustedSpeed);
+  
+  // Bánh sau: trái lùi, phải tiến
+  digitalWrite(rearLeft_IN1, LOW);    
+  digitalWrite(rearLeft_IN2, HIGH);
+  digitalWrite(rearRight_IN1, HIGH);  
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, adjustedSpeed);
+  analogWrite(rear_ENB, adjustedSpeed);
+}
+
+// Hàm điều khiển xe quay phải tại chỗ
+void right() {
+  // Giảm tốc độ 15% nếu đang ở tốc độ cao
+  int adjustedSpeed = (Speed >= 225) ? (Speed * 0.85) : Speed;
+  if (adjustedSpeed < 50) adjustedSpeed = 50;
+  
+  // Bánh trước: trái tiến, phải lùi
+  digitalWrite(frontLeft_IN1, HIGH);  
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, LOW);  
+  digitalWrite(frontRight_IN2, HIGH);
+  analogWrite(front_ENA, adjustedSpeed);
+  analogWrite(front_ENB, adjustedSpeed);
+  
+  // Bánh sau: trái tiến, phải lùi
+  digitalWrite(rearLeft_IN1, HIGH);   
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, LOW);   
+  digitalWrite(rearRight_IN2, HIGH);
+  analogWrite(rear_ENA, adjustedSpeed);
+  analogWrite(rear_ENB, adjustedSpeed);
+}
+
+// Hàm điều khiển xe tiến sang trái
+void forwardleft() {
+  // Bánh trước: trái dừng, phải tiến
+  digitalWrite(frontLeft_IN1, LOW);   
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, HIGH); 
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, 0);          // Bánh trái dừng
+  analogWrite(front_ENB, Speed);      // Bánh phải chạy
+  
+  // Bánh sau: trái dừng, phải tiến
+  digitalWrite(rearLeft_IN1, LOW);    
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, HIGH);  
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, 0);
+  analogWrite(rear_ENB, Speed);
+}
+
+// Hàm điều khiển xe tiến sang phải
+void forwardright() {
+  // Bánh trước: trái tiến, phải dừng
+  digitalWrite(frontLeft_IN1, HIGH);  
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, LOW);  
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, Speed);      // Bánh trái chạy
+  analogWrite(front_ENB, 0);          // Bánh phải dừng
+  
+  // Bánh sau: trái tiến, phải dừng
+  digitalWrite(rearLeft_IN1, HIGH);   
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, LOW);   
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, Speed);
+  analogWrite(rear_ENB, 0);
+}
+
+// Hàm điều khiển xe lùi sang trái
+void backleft() {
+  // Bánh trước: trái dừng, phải lùi
+  digitalWrite(frontLeft_IN1, LOW);   
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, LOW);  
+  digitalWrite(frontRight_IN2, HIGH);
+  analogWrite(front_ENA, 0);          // Bánh trái dừng
+  analogWrite(front_ENB, Speed);      // Bánh phải lùi
+  
+  // Bánh sau: trái dừng, phải lùi
+  digitalWrite(rearLeft_IN1, LOW);    
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, LOW);   
+  digitalWrite(rearRight_IN2, HIGH);
+  analogWrite(rear_ENA, 0);
+  analogWrite(rear_ENB, Speed);
+}
+
+// Hàm điều khiển xe lùi sang phải
+void backright() {
+  // Bánh trước: trái lùi, phải dừng
+  digitalWrite(frontLeft_IN1, LOW);   
+  digitalWrite(frontLeft_IN2, HIGH);
+  digitalWrite(frontRight_IN1, LOW);  
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, Speed);      // Bánh trái lùi
+  analogWrite(front_ENB, 0);          // Bánh phải dừng
+  
+  // Bánh sau: trái lùi, phải dừng
+  digitalWrite(rearLeft_IN1, LOW);    
+  digitalWrite(rearLeft_IN2, HIGH);
+  digitalWrite(rearRight_IN1, LOW);   
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, Speed);
+  analogWrite(rear_ENB, 0);
+}
+
+// Hàm dừng tất cả động cơ
+void Stop() {
+  // Dừng 2 bánh trước
+  digitalWrite(frontLeft_IN1, LOW);
+  digitalWrite(frontLeft_IN2, LOW);
+  digitalWrite(frontRight_IN1, LOW);
+  digitalWrite(frontRight_IN2, LOW);
+  analogWrite(front_ENA, 0);  // Tốc độ = 0
+  analogWrite(front_ENB, 0);
+  
+  // Dừng 2 bánh sau
+  digitalWrite(rearLeft_IN1, LOW);
+  digitalWrite(rearLeft_IN2, LOW);
+  digitalWrite(rearRight_IN1, LOW);
+  digitalWrite(rearRight_IN2, LOW);
+  analogWrite(rear_ENA, 0);
+  analogWrite(rear_ENB, 0);
+}

@@ -41,6 +41,8 @@ Core/Src/gpio.c \
 Core/Src/freertos.c \
 Core/Src/tim.c \
 Core/Src/usart.c \
+Core/Src/motor.c \
+Core/Src/bluetooth.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
 Core/Src/stm32f1xx_hal_timebase_tim.c \

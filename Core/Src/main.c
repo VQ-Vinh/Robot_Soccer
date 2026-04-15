@@ -25,6 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "motor.h"
+#include "bluetooth.h"
 
 /* USER CODE END Includes */
 
@@ -93,6 +95,12 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+
+  /* Initialize Motor Control */
+  Motor_Init();
+
+  /* Initialize Bluetooth Communication */
+  Bluetooth_Init();
 
   /* USER CODE END 2 */
 
